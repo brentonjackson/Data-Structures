@@ -15,6 +15,7 @@ public class LinkedListDriver {
         System.out.println("Index of 4: " + list1.indexOf(4));
         list1.print();
         System.out.println("Contains 9: " + list1.contains(9));
+        System.out.println(list1.getKthNodeFromTheEnd(2)); // 8
         int listSize = list1.size();
         for (int i = 0; i < listSize; i++) {
             list1.deleteLast();
@@ -24,7 +25,8 @@ public class LinkedListDriver {
         MyLinkedList<String> list2 = new MyLinkedList<String>();
         list2.add(new String[] {"a", "b", "c", "d", "e"});
         list2.print();
-        list2.reverse();
-        list2.print();
+        // list2.reverse();
+        // list2.print();
+        System.out.println(list2.getKthNodeFromTheEnd(4)); // b
     }
 }

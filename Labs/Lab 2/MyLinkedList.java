@@ -37,6 +37,12 @@ public class MyLinkedList<AnyType> {
         
         return node.value;
     }
+    private boolean isNextTail(Node<AnyType> current) {
+        return current.next == tail;
+    }
+    private boolean isCurrentTail(Node<AnyType> current) {
+        return current == tail;
+    }
     public void print() {
         if (isEmpty()) {
             System.out.print(" [ ]\n");
@@ -45,8 +51,8 @@ public class MyLinkedList<AnyType> {
 
         Node<AnyType> current = head.next;
         System.out.print(" [ ");
-        while (current != null) {
-            if ((current.next == tail)) {
+        while (!isCurrentTail(current)) {
+            if (isNextTail(current)) {
                 System.out.print(current.value + " ] ");
                 System.out.println();
                 return;
@@ -83,7 +89,7 @@ public class MyLinkedList<AnyType> {
     public int indexOf(AnyType value) {
         int index = 0;
         Node<AnyType> current = head.next;
-        while(current != tail) {
+        while(!isCurrentTail(current)) {
             if (current.value == value) {
                 return index;
             }
@@ -131,4 +137,22 @@ public class MyLinkedList<AnyType> {
 
 
     }
+
+    public AnyType getKthNodeFromTheEnd(int k) {
+        if (isEmpty()) throw new IllegalStateException();
+        if (k <= 0) throw new IllegalArgumentException();
+        Node<AnyType> first = head.next;
+        Node<AnyType> second = head.next;
+        // go to last node
+        for (int i = 0; i < k - 1; i++) {
+            if (first.next == tail) throw new IllegalArgumentException();
+            first = first.next;
+        }
+        while (!isNextTail(first)) {
+            first = first.next;
+            second = second.next;
+        }
+        return second.value;
+        }
+        
 }
