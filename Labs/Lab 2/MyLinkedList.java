@@ -29,14 +29,6 @@ public class MyLinkedList<AnyType> {
     private boolean isEmpty() {
         return (size() == 0);
     }
-    private AnyType remove( Node<AnyType> node )
-    {
-        node.next.prev = node.prev;
-        node.prev.next = node.next;
-        theSize--;
-        
-        return node.value;
-    }
     private boolean isNextTail(Node<AnyType> current) {
         return current.next == tail;
     }
@@ -83,7 +75,6 @@ public class MyLinkedList<AnyType> {
     public void add(AnyType[] valueArr) {
         for (int i = 0; i < valueArr.length; i++) {
             addLast(valueArr[i]);
-            theSize++;
         }
     }
     public int indexOf(AnyType value) {
@@ -115,7 +106,7 @@ public class MyLinkedList<AnyType> {
         tail.prev.prev.next = tail;
         tail.prev = tail.prev.prev;
         theSize--;
-    }
+    }   
     public void reverse() {
         if (isEmpty()) {
             return;
@@ -124,35 +115,15 @@ public class MyLinkedList<AnyType> {
 
         previousPos = tail;
         currentPos = head.next;
-        nextPos = currentPos.next;
-        while( nextPos != tail) {
+        while( !isCurrentTail(currentPos)) {
+            nextPos = currentPos.next;
             currentPos.next = previousPos;
+            currentPos.prev = nextPos;
             previousPos = currentPos;
             currentPos = nextPos;
-            nextPos = nextPos.next;
         }
-        // reverse last node and set new head link
-        currentPos.next = previousPos;
-        head.next = currentPos;
-
-
-    }
-
-    public AnyType getKthNodeFromTheEnd(int k) {
-        if (isEmpty()) throw new IllegalStateException();
-        if (k <= 0) throw new IllegalArgumentException();
-        Node<AnyType> first = head.next;
-        Node<AnyType> second = head.next;
-        // go to last node
-        for (int i = 0; i < k - 1; i++) {
-            if (first.next == tail) throw new IllegalArgumentException();
-            first = first.next;
-        }
-        while (!isNextTail(first)) {
-            first = first.next;
-            second = second.next;
-        }
-        return second.value;
-        }
-        
+        // swap head and tail
+        tail.prev = head.next;
+        head.next = previousPos;
+    }   
 }
