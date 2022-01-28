@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class MyLinkedList2<AnyType> {
     private Node<AnyType> head;
     private Node<AnyType> tail;
